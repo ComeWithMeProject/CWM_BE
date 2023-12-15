@@ -11,13 +11,28 @@ java {
 	sourceCompatibility = '17'
 }
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'com.auth0:java-jwt:4.2.1' //JWT
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //JPA
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' //OAuth2
+	implementation 'org.springframework.boot:spring-boot-starter-security' //Spring Sercurity
+	implementation 'org.springframework.boot:spring-boot-starter-validation' //Validation
+	implementation 'org.springframework.boot:spring-boot-starter-web' //Spring Web
+	compileOnly 'org.projectlombok:lombok' //Lombok
+	runtimeOnly 'mysql:mysql-connector-java' //Mysql
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
