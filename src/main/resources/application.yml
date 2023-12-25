@@ -14,16 +14,16 @@ spring:
     allow-circular-references: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/comewithme?createDatabaseIfNotExist=true
-    username: root
-    password: 87654321
+    url: jdbc:mysql://database-1.czs2ycqa6au7.ap-southeast-2.rds.amazonaws.com:3306/comewithme?createDatabaseIfNotExist=true
+    username: ComeWithMeMaster
+    password: 12345678
   profiles:
     active: local
     include: oauth, jwt
 
   jpa:
     hibernate:
-      ddl-auto: create #create update none
+      ddl-auto: none #create update validate none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
