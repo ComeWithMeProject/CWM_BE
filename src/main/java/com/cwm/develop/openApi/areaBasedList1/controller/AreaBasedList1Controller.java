@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class AreaBasedList1Controller {
 
     private final AreaBasedListService areaBasedListService;

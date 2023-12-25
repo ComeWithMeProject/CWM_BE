@@ -2,12 +2,14 @@ package com.cwm.develop.openApi.areaBasedList1;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "AREABASEDLIST1")
 public class AreaBasedList1 {

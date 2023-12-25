@@ -38,6 +38,10 @@ public class DetailWithTour {
     //wheelchair
     private String wheelchair;
 
+    // exit
+    @Column(name = "\"exit\"")
+    private String exit;
+
     //elevator
     private String elevator;
 
@@ -101,4 +105,36 @@ public class DetailWithTour {
     //infantsfamilyetc
     private String infantsfamilyetc;
 
+    public DetailWithTour(Long detailWithTourId, String contentId, String parking, String route, String publictransport, String ticketoffice, String promotion, String wheelchair, String exit, String elevator, String restroom, String auditorium, String room, String handicapetc, String braileblock, String helpdog, String guidehuman, String audioguide, String bigprint, String brailepromotion, String guidesystem, String blindhandicapetc, String signguide, String videoguide, String hearingroom, String hearinghandicapetc, String stroller, String lactationroom, String babysparechair, String infantsfamilyetc) {
+        this.detailWithTourId = detailWithTourId;
+        this.contentId = contentId;
+        this.parking = parking;
+        this.route = route;
+        this.publictransport = publictransport;
+        this.ticketoffice = ticketoffice;
+        this.promotion = promotion;
+        this.wheelchair = wheelchair;
+        this.exit = exit;
+        this.elevator = elevator;
+        this.restroom = restroom;
+        this.auditorium = auditorium;
+        this.room = room;
+        this.handicapetc = handicapetc;
+        this.braileblock = braileblock;
+        this.helpdog = helpdog;
+        this.guidehuman = guidehuman;
+        this.audioguide = audioguide;
+        this.bigprint = bigprint;
+        this.brailepromotion = brailepromotion;
+        this.guidesystem = guidesystem;
+        this.blindhandicapetc = blindhandicapetc;
+        this.signguide = signguide;
+        this.videoguide = videoguide;
+        this.hearingroom = hearingroom;
+        this.hearinghandicapetc = hearinghandicapetc;
+        this.stroller = stroller;
+        this.lactationroom = lactationroom;
+        this.babysparechair = babysparechair;
+        this.infantsfamilyetc = infantsfamilyetc;
+    }
 }
