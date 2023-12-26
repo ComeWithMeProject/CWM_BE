@@ -1,5 +1,6 @@
 package com.cwm.develop.user;
 
+import com.cwm.develop.user.dto.UserRequestDto;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "USERS")
 @Builder
-public class User {
+public class User extends UserBaseTimeEntity{
 
     //회원 번호
     @Id //pk
@@ -71,5 +72,27 @@ public class User {
     //RefreshToken 재발급 메소드
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    public User(UserRequestDto requestDto) {
+        this.email = requestDto.getEmail();
+        this.name = requestDto.getName();
+        this.password = requestDto.getPassword();
+        this.heart = requestDto.getHeart();
+        this.imageUrl = requestDto.getImageUrl();
+        this.role = requestDto.getRole();
+        this.socialType = requestDto.getSocialType();
+        this.socialId = requestDto.getSocialId();
+    }
+
+    public void update(UserRequestDto requestDto) {
+        this.email = requestDto.getEmail();
+        this.name = requestDto.getName();
+        this.password = requestDto.getPassword();
+        this.heart = requestDto.getHeart();
+        this.imageUrl = requestDto.getImageUrl();
+        this.role = requestDto.getRole();
+        this.socialType = requestDto.getSocialType();
+        this.socialId = requestDto.getSocialId();
     }
 }
