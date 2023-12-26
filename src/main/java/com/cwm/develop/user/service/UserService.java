@@ -43,7 +43,7 @@ public class UserService {
                 .imageUrl(userRequestDto.getImageUrl())
                 .role(Role.USER)
                 .build();
-
+        userRepository.save(user1);
         return new UserResponseDto(user1);
     }
 

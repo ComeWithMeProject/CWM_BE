@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserResponseDto {
 
-
     private Long userId;
     private String email;
     private String name;

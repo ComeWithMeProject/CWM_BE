@@ -80,9 +80,6 @@ public class User extends UserBaseTimeEntity{
         this.password = requestDto.getPassword();
         this.heart = requestDto.getHeart();
         this.imageUrl = requestDto.getImageUrl();
-        this.role = requestDto.getRole();
-        this.socialType = requestDto.getSocialType();
-        this.socialId = requestDto.getSocialId();
     }
 
     public void update(UserRequestDto requestDto) {
@@ -91,8 +88,5 @@ public class User extends UserBaseTimeEntity{
         this.password = requestDto.getPassword();
         this.heart = requestDto.getHeart();
         this.imageUrl = requestDto.getImageUrl();
-        this.role = requestDto.getRole();
-        this.socialType = requestDto.getSocialType();
-        this.socialId = requestDto.getSocialId();
     }
 }
