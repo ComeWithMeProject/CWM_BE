@@ -1,22 +1,14 @@
 package com.cwm.develop.openApi.areaBasedList1.controller;
 
 import com.cwm.develop.openApi.areaBasedList1.AreaBasedList1;
-import com.cwm.develop.openApi.areaBasedList1.dto.AreaBasedList1Dto;
-import com.cwm.develop.openApi.areaBasedList1.repository.AreaBasedList1Repository;
+import com.cwm.develop.openApi.areaBasedList1.dto.AreaInfoMapping;
 import com.cwm.develop.openApi.areaBasedList1.service.AreaBasedListService;
-import com.cwm.develop.openApi.areaCode1.AreaCode1;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
 
 @RestController
@@ -31,4 +23,16 @@ public class AreaBasedList1Controller {
             areaBasedListService.areaBasedList1Save();
             return "저장 성공";
     }
+
+//    @GetMapping("/areaBasedList1/search")
+//    public List<AreaInfoMapping> search(String keyword) {
+//
+//        List<AreaInfoMapping> list = areaBasedListService.search(keyword);
+//        System.out.println("리스트 : " + list);
+//
+//        String json = new Gson().toJson(list);
+//        System.out.println("제이슨 결과 = " + json);
+//        return areaBasedListService.search(keyword);
+//    }
+
 }

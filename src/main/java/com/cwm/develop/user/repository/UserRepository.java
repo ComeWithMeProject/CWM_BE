@@ -1,9 +1,11 @@
 package com.cwm.develop.user.repository;
 
+import com.cwm.develop.openApi.areaBasedList1.dto.AreaInfoMapping;
 import com.cwm.develop.user.SocialType;
 import com.cwm.develop.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -14,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByName(String name);
 
     Optional<User> findByRefreshToken(String refreshToken);
-
+    List<User> findAll();
     /*
      * OAuth2 로그인 구현 시 사용하는 메소드
      * 소셜 타입과 소셜의 식별값으로 회원 찾는 메소드

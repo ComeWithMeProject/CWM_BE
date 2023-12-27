@@ -1,18 +1,22 @@
 package com.cwm.develop.user.service;
 
+import com.cwm.develop.global.jwt.service.JwtService;
 import com.cwm.develop.user.Role;
 import com.cwm.develop.user.User;
 import com.cwm.develop.user.dto.UserRequestDto;
 import com.cwm.develop.user.dto.UserResponseDto;
-import com.cwm.develop.user.dto.UserSignUpDto;
 import com.cwm.develop.user.dto.UserSuccessResponseDto;
 import com.cwm.develop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,6 +27,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final JwtService jwtService;
+
+    @Transactional
+    public List<User> allSearch() {
+        return userRepository.findAll();
+    }
 
     //유저 회원가입
     @Transactional
@@ -78,5 +89,19 @@ public class UserService {
 
         userRepository.deleteById(userId);
         return new UserSuccessResponseDto(true);
+    }
+
+    @Transactional
+    public void logout(Authentication authentication) {
+        String email = authentication.getName();
+        System.out.println("이메일: " + email);
+
+        if (redisTemplate.hasKey(email)) {
+            redisTemplate.delete(email); // 해당 키가 존재하면 삭제
+            System.out.println("토큰 삭제됨");
+        } else {
+            System.out.println("토큰이 존재하지 않음");
+        }
+        // 여기에 사용자 정보 확인하는 코드가 있었을 텐데 삭제하세요.
     }
 }
