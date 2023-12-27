@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro12Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO12")
+@SuppressWarnings("unused")
 public class DetailIntro12 {
 
     @Id
@@ -89,5 +91,26 @@ public class DetailIntro12 {
         this.chkbabycarriage = chkbabycarriage;
         this.chkpet = chkpet;
         this.chkcreditcard = chkcreditcard;
+    }
+
+    //@SuppressWarnings("unused") - 해당 어노테이션으로 아래 생성자 생성 가능해짐
+    public DetailIntro12(DetailIntro12Dto detailIntro12Dto) {
+        this.contentId = detailIntro12Dto.getContentId();
+        this.contenttypeid = detailIntro12Dto.getContenttypeid();
+        this.heritage1 = detailIntro12Dto.getHeritage1();
+        this.heritage2 = detailIntro12Dto.getHeritage2();
+        this.heritage3 = detailIntro12Dto.getHeritage3();
+        this.infocenter = detailIntro12Dto.getInfocenter();
+        this.opendate = detailIntro12Dto.getOpendate();
+        this.restdate = detailIntro12Dto.getRestdate();
+        this.expguide = detailIntro12Dto.getExpguide();
+        this.expagerange = detailIntro12Dto.getExpagerange();
+        this.accomcount = detailIntro12Dto.getAccomcount();
+        this.useseason = detailIntro12Dto.getUseseason();
+        this.usetime = detailIntro12Dto.getUsetime();
+        this.parking = detailIntro12Dto.getParking();
+        this.chkbabycarriage = detailIntro12Dto.getChkbabycarriage();
+        this.chkpet = detailIntro12Dto.getChkpet();
+        this.chkcreditcard = detailIntro12Dto.getChkcreditcard();
     }
 }

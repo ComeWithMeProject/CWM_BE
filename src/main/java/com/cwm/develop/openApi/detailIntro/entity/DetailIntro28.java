@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro28Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO28")
+@SuppressWarnings("unused")
 public class DetailIntro28 {
 
     @Id
@@ -84,5 +86,25 @@ public class DetailIntro28 {
         this.chkbabycarriageleports = chkbabycarriageleports;
         this.chkpetleports = chkpetleports;
         this.chkcreditcardleports = chkcreditcardleports;
+    }
+
+    public DetailIntro28(DetailIntro28Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.openperiod = requestDto.getOpenperiod();
+        this.reservation = requestDto.getReservation();
+        this.infocenterleports = requestDto.getInfocenterleports();
+        this.scaleleports = requestDto.getScaleleports();
+        this.accomcountleports = requestDto.getAccomcountleports();
+        this.restdateleports = requestDto.getRestdateleports();
+        this.usetimeleports = requestDto.getUsetimeleports();
+        this.usefeeleports = requestDto.getUsefeeleports();
+        this.expagerangeleports = requestDto.getExpagerangeleports();
+        this.parkingleports = requestDto.getParkingleports();
+        this.parkingfeeleports = requestDto.getParkingfeeleports();
+        this.chkbabycarriageleports = requestDto.getChkbabycarriageleports();
+        this.chkpetleports = requestDto.getChkpetleports();
+        this.chkcreditcardleports = requestDto.getChkcreditcardleports();
+
     }
 }

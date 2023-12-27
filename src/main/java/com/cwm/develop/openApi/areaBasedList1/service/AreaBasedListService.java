@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +25,6 @@ import java.util.List;
 public class AreaBasedListService {
 
     private final AreaBasedList1Repository areaBasedList1Repository;
-
-    @Transactional
-    public List<AreaInfoMapping> search(String keyword) {
-        return areaBasedList1Repository.findByTitleContaining(keyword);
-    }
 
     @Transactional
     public void areaBasedList1Save() throws IOException {
@@ -107,5 +105,30 @@ public class AreaBasedListService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //페이징 + 전체 목록 조회
+    @Transactional
+    public Page<AreaBasedList1> getAreaBasedList1lists(int page, int size) {
+        return areaBasedList1Repository.findAll(PageRequest.of(page,size, Sort.by("contentId").descending()));
+    }
+
+    //검색 + 페이징 (검색페이지)
+    @Transactional
+    public Page<AreaBasedList1> searchTitle(String title, int page, int size) {
+        if(title == null) title = "";
+
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("areaBasedListId").descending());
+        return areaBasedList1Repository.findByTitleContains(title, pageRequest);
+    }
+
+    //검색 + 페이징 (메인페이지)
+    @Transactional
+    public Page<AreaBasedList1> searchAreaCodeAndContentTypeId(String areaCode, String contentTypeId, int page, int size) {
+        if(areaCode == null) areaCode = "";
+        if(contentTypeId == null) contentTypeId = "";
+
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("areaBasedListId").descending());
+        return areaBasedList1Repository.findByAreaCodeAndContentTypeIdContains(areaCode, contentTypeId, pageRequest);
     }
 }

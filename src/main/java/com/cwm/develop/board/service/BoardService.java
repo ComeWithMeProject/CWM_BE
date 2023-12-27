@@ -6,6 +6,7 @@ import com.cwm.develop.board.dto.BoardResponseDto;
 import com.cwm.develop.board.dto.SuccessResponseDto;
 import com.cwm.develop.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -70,21 +72,16 @@ public class BoardService {
 
     //페이징 처리해 게시글 조회
     @Transactional
-    public Page<BoardResponseDto> getPostsPage(int pageNo, String criteria, String sort) {
-        Pageable pageable = (sort.equals("ASC")) ?
-                PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.ASC, criteria))
-                : PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.DESC, criteria));
-
-        return boardRepository.findAll(pageable).map(BoardResponseDto::new);
+    public Page<Board> getPostsPage(int page, int size){
+        return boardRepository.findAll(PageRequest.of(page,size,Sort.by("boardId").descending()));
     }
 
-    //페이징 처리해 게시글 검색기능
+    //검색 + 페이징
     @Transactional
-    public Page<BoardResponseDto> searchByWriter(String writer, int pageNo) {
-        if(writer.equals("")) writer = "";
+    public Page<Board> searchPosts(String title, int page, int size) {
+        if(title == null) title = "";
 
-        //, Sort.by("boardId").descending()
-        PageRequest pageRequest = PageRequest.of(pageNo, 5);
-        return boardRepository.findByWriterContaining(writer, pageRequest).map(BoardResponseDto::new);
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("boardId").descending());
+        return boardRepository.findByTitleContains(title, pageRequest);
     }
 }

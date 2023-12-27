@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro15Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO15")
+@SuppressWarnings("unused")
 public class DetailIntro15 {
 
     @Id
@@ -99,5 +101,28 @@ public class DetailIntro15 {
         this.discountinfofestival = discountinfofestival;
         this.spendtimefestival = spendtimefestival;
         this.festivalgrade = festivalgrade;
+    }
+
+    public DetailIntro15(DetailIntro15Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.sponsor1 = requestDto.getSponsor1();
+        this.sponsor1tel = requestDto.getSponsor1tel();
+        this.sponsor2 = requestDto.getSponsor2();
+        this.sponsor2tel = requestDto.getSponsor2tel();
+        this.eventenddate = requestDto.getEventenddate();
+        this.playtime = requestDto.getPlaytime();
+        this.eventplace = requestDto.getEventplace();
+        this.eventhomepage = requestDto.getEventhomepage();
+        this.agelimit = requestDto.getAgelimit();
+        this.bookingplace = requestDto.getBookingplace();
+        this.placeinfo = requestDto.getPlaceinfo();
+        this.subevent = requestDto.getSubevent();
+        this.program = requestDto.getProgram();
+        this.eventstartdate = requestDto.getEventstartdate();
+        this.usetimefestival = requestDto.getUsetimefestival();
+        this.discountinfofestival = requestDto.getDiscountinfofestival();
+        this.spendtimefestival = requestDto.getSpendtimefestival();
+        this.festivalgrade = requestDto.getFestivalgrade();
     }
 }

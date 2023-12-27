@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro14Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO14")
+@SuppressWarnings("unused")
 public class DetailIntro14 {
 
     @Id
@@ -79,5 +81,23 @@ public class DetailIntro14 {
         this.chkbabycarriageculture = chkbabycarriageculture;
         this.chkpetculture = chkpetculture;
         this.chkcreditcardculture = chkcreditcardculture;
+    }
+
+    public DetailIntro14(DetailIntro14Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.scale = requestDto.getScale();
+        this.usefee = requestDto.getUsefee();
+        this.discountinfo = requestDto.getDiscountinfo();
+        this.spendtime = requestDto.getSpendtime();
+        this.parkingfee = requestDto.getParkingfee();
+        this.infocenterculture = requestDto.getInfocenterculture();
+        this.accomcountculture = requestDto.getAccomcountculture();
+        this.usetimeculture = requestDto.getUsetimeculture();
+        this.restdateculture = requestDto.getRestdateculture();
+        this.parkingculture = requestDto.getParkingculture();
+        this.chkbabycarriageculture = requestDto.getChkbabycarriageculture();
+        this.chkpetculture = requestDto.getChkpetculture();
+        this.chkcreditcardculture = requestDto.getChkcreditcardculture();
     }
 }
