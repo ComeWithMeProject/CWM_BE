@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -620,4 +623,45 @@ public class DISerivce {
         } // catch
     } // public void DetailIntroSave()
 
+    //DetailIntro12 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro12> getDetailIntro12(int page, int size) {
+        return diRepository12.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro14 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro14> getDetailIntro14(int page, int size) {
+        return diRepository14.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro15 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro15> getDetailIntro15(int page, int size) {
+        return diRepository15.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro28 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro28> getDetailIntro28(int page, int size) {
+        return diRepository28.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro32 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro32> getDetailIntro32(int page, int size) {
+        return diRepository32.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro38 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro38> getDetailIntro38(int page, int size) {
+        return diRepository38.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
+
+    //DetailIntro39 페이징 통한 전체 조회
+    @Transactional
+    public Page<DetailIntro39> getDetailIntro39(int page, int size) {
+        return diRepository39.findAll(PageRequest.of(page,size, Sort.by("detailIntroId").descending()));
+    }
 }

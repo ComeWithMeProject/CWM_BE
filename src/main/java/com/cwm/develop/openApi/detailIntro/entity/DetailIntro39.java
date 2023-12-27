@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro39Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO39")
+@SuppressWarnings("unused")
 public class DetailIntro39 {
 
     @Id
@@ -91,5 +93,26 @@ public class DetailIntro39 {
         this.chkcreditcardfood = chkcreditcardfood;
         this.reservationfood = reservationfood;
         this.lcnsno = lcnsno;
+    }
+
+    public DetailIntro39(DetailIntro39Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.seat = requestDto.getSeat();
+        this.kidsfacility = requestDto.getKidsfacility();
+        this.firstmenu = requestDto.getFirstmenu();
+        this.treatmenu = requestDto.getTreatmenu();
+        this.smoking = requestDto.getSmoking();
+        this.packing = requestDto.getPacking();
+        this.infocenterfood = requestDto.getInfocenterfood();
+        this.scalefood = requestDto.getScalefood();
+        this.parkingfood = requestDto.getParkingfood();
+        this.opendatefood = requestDto.getOpendatefood();
+        this.opentimefood = requestDto.getOpentimefood();
+        this.restdatefood = requestDto.getRestdatefood();
+        this.discountinfofood = requestDto.getDiscountinfofood();
+        this.chkcreditcardfood = requestDto.getChkcreditcardfood();
+        this.reservationfood = requestDto.getReservationfood();
+        this.lcnsno = requestDto.getLcnsno();
     }
 }

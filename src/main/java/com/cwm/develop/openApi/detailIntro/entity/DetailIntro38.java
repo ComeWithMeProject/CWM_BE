@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro38Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO38")
+@SuppressWarnings("unused")
 public class DetailIntro38 {
 
     @Id
@@ -87,5 +89,25 @@ public class DetailIntro38 {
         this.chkpetshopping = chkpetshopping;
         this.chkcreditcardshopping = chkcreditcardshopping;
         this.opentime = opentime;
+    }
+
+    public DetailIntro38(DetailIntro38Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.saleitem = requestDto.getSaleitem();
+        this.saleitemcost = requestDto.getSaleitemcost();
+        this.fairday = requestDto.getFairday();
+        this.opendateshopping = requestDto.getOpendateshopping();
+        this.shopguide = requestDto.getShopguide();
+        this.culturecenter = requestDto.getCulturecenter();
+        this.restroom = requestDto.getRestroom();
+        this.infocentershopping = requestDto.getInfocentershopping();
+        this.scaleshopping = requestDto.getScaleshopping();
+        this.restdateshopping = requestDto.getRestdateshopping();
+        this.parkingshopping = requestDto.getParkingshopping();
+        this.chkbabycarriageshopping = requestDto.getChkbabycarriageshopping();
+        this.chkpetshopping = requestDto.getChkpetshopping();
+        this.chkcreditcardshopping = requestDto.getChkcreditcardshopping();
+        this.opentime = requestDto.getOpentime();
     }
 }

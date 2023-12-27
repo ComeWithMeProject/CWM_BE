@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailWithTour;
 
+import com.cwm.develop.openApi.detailWithTour.dto.DetailWithTourDto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILWITHTOUR")
+@SuppressWarnings("unused")
 public class DetailWithTour {
 
     @Id
@@ -136,5 +138,38 @@ public class DetailWithTour {
         this.lactationroom = lactationroom;
         this.babysparechair = babysparechair;
         this.infantsfamilyetc = infantsfamilyetc;
+    }
+
+    //@SuppressWarnings("unused") - 해당 어노테이션 붙여줌으로써 아래 생성자 생성 가능해짐..
+    public DetailWithTour(DetailWithTourDto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.parking = requestDto.getParking();
+        this.route = requestDto.getRoute();
+        this.publictransport = requestDto.getPublictransport();
+        this.ticketoffice = requestDto.getTicketoffice();
+        this.promotion = requestDto.getPromotion();
+        this.wheelchair = requestDto.getWheelchair();
+        this.exit = requestDto.getExit();
+        this.elevator = requestDto.getElevator();
+        this.restroom = requestDto.getRestroom();
+        this.auditorium = requestDto.getAuditorium();
+        this.room = requestDto.getRoom();
+        this.handicapetc = requestDto.getHandicapetc();
+        this.braileblock = requestDto.getBraileblock();
+        this.helpdog = requestDto.getHelpdog();
+        this.guidehuman = requestDto.getGuidehuman();
+        this.audioguide = requestDto.getAudioguide();
+        this.bigprint = requestDto.getBigprint();
+        this.brailepromotion = requestDto.getBrailepromotion();
+        this.guidesystem = requestDto.getGuidesystem();
+        this.blindhandicapetc = requestDto.getBlindhandicapetc();
+        this.signguide = requestDto.getSignguide();
+        this.videoguide = requestDto.getVideoguide();
+        this.hearingroom = requestDto.getHearingroom();
+        this.hearinghandicapetc = requestDto.getHearinghandicapetc();
+        this.stroller = requestDto.getStroller();
+        this.lactationroom = requestDto.getLactationroom();
+        this.babysparechair = requestDto.getBabysparechair();
+        this.infantsfamilyetc = requestDto.getInfantsfamilyetc();
     }
 }

@@ -1,13 +1,18 @@
 package com.cwm.develop.board.controller;
 
+import com.cwm.develop.board.Board;
 import com.cwm.develop.board.dto.BoardRequestDto;
 import com.cwm.develop.board.dto.BoardResponseDto;
 import com.cwm.develop.board.dto.SuccessResponseDto;
 import com.cwm.develop.board.service.BoardService;
+import com.cwm.develop.global.common.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -23,12 +28,14 @@ public class BoardController {
         return boardService.getPosts();
     }
 
-    //페이징 처리한 목록 조회
+    //페이징 처리한 전체 목록 조회
     @GetMapping("/paging/posts")
-    public Page<BoardResponseDto> getPostsPage(@RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
-                                               @RequestParam(required = false, defaultValue = "createdAt", value = "orderBy") String criteria,
-                                               @RequestParam(required = false, defaultValue = "DESC", value = "sort") String sort) {
-        return boardService.getPostsPage(pageNo, criteria, sort);
+    public ResponseEntity getPostsPage(@RequestParam(required = false, defaultValue = "0", value = "page") int page,
+                                       @RequestParam(required = false, defaultValue = "0", value = "size") int size) {
+        Page<Board> result = boardService.getPostsPage(page -1, size);
+        List<Board> lists = result.getContent();
+
+        return new ResponseEntity(new MultiResponseDto<>(lists,result), HttpStatus.OK);
     }
 
     //게시글 작성
@@ -55,10 +62,14 @@ public class BoardController {
         return boardService.deletePost(id, requestDto);
     }
 
-    //게시글 검색(아직 미완성)
+    //게시글 검색 + 페이징
     @GetMapping("/post/search")
-    public Page<BoardResponseDto> searchPost(@RequestParam(required = true, value = "writer") String writer,
-                                             @RequestParam int pageNo) {
-        return boardService.searchByWriter(writer, pageNo);
+    public ResponseEntity searchPosts(@RequestParam(value ="title",required = false) String title,
+                                      @RequestParam @Positive int page,
+                                      @RequestParam @Positive int size) {
+        Page<Board> pageBoards = boardService.searchPosts(title, page, size);
+        List<Board> lists = pageBoards.getContent();
+
+        return new ResponseEntity(new MultiResponseDto<>(lists, pageBoards), HttpStatus.OK);
     }
 }
