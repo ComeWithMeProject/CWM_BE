@@ -14,9 +14,9 @@ spring:
     allow-circular-references: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://database-1.czs2ycqa6au7.ap-southeast-2.rds.amazonaws.com:3306/comewithme?createDatabaseIfNotExist=true
-    username: ComeWithMeMaster
-    password: 12345678
+    url: jdbc:mysql://database-1.czs2ycqa6au7.ap-southeast-2.rds.amazonaws.com:3306/comewithme?createDatabaseIfNotExist=true #jdbc:mysql://localhost:3306/comewithme?createDatabaseIfNotExist=true
+    username: ComeWithMeMaster #root
+    password: 12345678 #87654321
   profiles:
     active: local
     include: oauth, jwt

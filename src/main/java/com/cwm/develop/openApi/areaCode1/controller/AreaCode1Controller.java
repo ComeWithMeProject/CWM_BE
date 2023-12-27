@@ -1,26 +1,36 @@
 package com.cwm.develop.openApi.areaCode1.controller;
 
+import com.cwm.develop.global.common.MultiResponseDto;
 import com.cwm.develop.openApi.areaCode1.AreaCode1;
 import com.cwm.develop.openApi.areaCode1.repository.AreaCode1Repository;
+import com.cwm.develop.openApi.areaCode1.service.AreaCode1Service;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class AreaCode1Controller {
 
     private final AreaCode1Repository areaCode1Repository;
+    private final AreaCode1Service areaCode1Service;
 
     @GetMapping("/areaCode1")
     public void areaCode1Save() throws IOException {
@@ -65,5 +75,15 @@ public class AreaCode1Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/areaCode1/lists")
+    public ResponseEntity getAreaCode1lists(@RequestParam(required = false, defaultValue = "0", value = "page") int page,
+                                            @RequestParam(required = false, defaultValue = "0", value = "size") int size) {
+        Page<AreaCode1> result = areaCode1Service.getAreaCode1lists(page -1, size);
+        List<AreaCode1> lists = result.getContent();
+
+        log.info("lists:", lists);
+        return new ResponseEntity(new MultiResponseDto<>(lists,result), HttpStatus.OK);
     }
 }

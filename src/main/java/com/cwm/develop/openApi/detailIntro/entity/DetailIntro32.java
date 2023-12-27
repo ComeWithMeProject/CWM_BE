@@ -1,5 +1,6 @@
 package com.cwm.develop.openApi.detailIntro.entity;
 
+import com.cwm.develop.openApi.detailIntro.dto.DetailIntro32Dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "DETAILINTRO32")
+@SuppressWarnings("unused")
 public class DetailIntro32 {
 
     @Id
@@ -131,5 +133,40 @@ public class DetailIntro32 {
         this.reservationlodging = reservationlodging;
         this.scalelodging = scalelodging;
         this.accomcountlodging = accomcountlodging;
+    }
+
+    public DetailIntro32(DetailIntro32Dto requestDto) {
+        this.contentId = requestDto.getContentId();
+        this.contenttypeid = requestDto.getContenttypeid();
+        this.goodstay = requestDto.getGoodstay();
+        this.benikia = requestDto.getBenikia();
+        this.hanok = requestDto.getHanok();
+        this.roomcount = requestDto.getRoomcount();
+        this.roomtype = requestDto.getRoomtype();
+        this.refundregulation = requestDto.getRefundregulation();
+        this.checkintime = requestDto.getCheckintime();
+        this.checkouttime = requestDto.getCheckouttime();
+        this.chkcooking = requestDto.getChkcooking();
+        this.seminar = requestDto.getSeminar();
+        this.sports = requestDto.getSports();
+        this.sauna = requestDto.getSauna();
+        this.beauty = requestDto.getBeauty();
+        this.beverage = requestDto.getBeverage();
+        this.karaoke = requestDto.getKaraoke();
+        this.barbecue = requestDto.getBarbecue();
+        this.campfire = requestDto.getCampfire();
+        this.bicycle = requestDto.getBicycle();
+        this.fitness = requestDto.getFitness();
+        this.publicpc = requestDto.getPublicpc();
+        this.publicbath = requestDto.getPublicbath();
+        this.subfacility = requestDto.getSubfacility();
+        this.foodplace = requestDto.getFoodplace();
+        this.reservationurl = requestDto.getReservationurl();
+        this.pickup = requestDto.getPickup();
+        this.infocenterlodging = requestDto.getInfocenterlodging();
+        this.parkinglodging = requestDto.getParkinglodging();
+        this.reservationlodging = requestDto.getReservationlodging();
+        this.scalelodging = requestDto.getScalelodging();
+        this.accomcountlodging = requestDto.getAccomcountlodging();
     }
 }

@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,4 +132,9 @@ public class DWTService1 {
                 e.printStackTrace();
         } // catch
     } // public void DetailWithTourSave1()
+
+    @Transactional
+    public Page<DetailWithTour> getDetailWithTourLists(int page, int size) {
+        return dwtRepository.findAll(PageRequest.of(page,size, Sort.by("detailWithTourId").descending()));
+    }
 }

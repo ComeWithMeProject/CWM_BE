@@ -1,14 +1,9 @@
 package com.cwm.develop.openApi.areaBasedList1.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
 public class AreaBasedList1Dto {
-
-    private Long areaBasedListId;
-
     //addr1
     private String addr1;
 

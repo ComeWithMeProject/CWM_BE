@@ -1,5 +1,6 @@
 package com.cwm.develop.global.config;
 
+import com.cwm.develop.board.BoardMapper;
 import com.cwm.develop.global.jwt.fillter.JwtAuthenticationProcessingFilter;
 import com.cwm.develop.global.jwt.service.JwtService;
 import com.cwm.develop.global.login.fillter.CustomJsonUsernamePasswordAuthenticationFilter;
@@ -65,6 +66,7 @@ public class SecurityConfig {
                 .antMatchers("/user/**").permitAll() // 회원가입 접근 가능
                 .antMatchers("/api/**").permitAll() // Open Api DB 저장 가능
                 .antMatchers("/board/**").permitAll() // Board 접근 가능
+                .antMatchers("/like/**").permitAll() // like 접근 가능
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 //== 소셜 로그인 설정 ==//
@@ -140,4 +142,16 @@ public class SecurityConfig {
         JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, userRepository);
         return jwtAuthenticationFilter;
     }
+
+    //modelMapper
+//    @Bean
+//    public org.modelmapper.ModelMapper modelMapper(){
+//        return new org.modelmapper.ModelMapper();
+//    }
+//
+//    //BoardMapper
+//    @Bean
+//    public BoardMapper boardMapper(org.modelmapper.ModelMapper modelMapper) {
+//        return new BoardMapper(modelMapper);
+//    }
 }

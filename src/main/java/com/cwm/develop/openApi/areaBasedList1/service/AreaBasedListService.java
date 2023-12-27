@@ -1,12 +1,16 @@
 package com.cwm.develop.openApi.areaBasedList1.service;
 
 import com.cwm.develop.openApi.areaBasedList1.AreaBasedList1;
+import com.cwm.develop.openApi.areaBasedList1.mapping.AreaBasedList1Mapping;
 import com.cwm.develop.openApi.areaBasedList1.repository.AreaBasedList1Repository;
 import com.cwm.develop.openApi.areaCode1.AreaCode1;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,5 +107,10 @@ public class AreaBasedListService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Transactional
+    public Page<AreaBasedList1> getAreaBasedList1lists(int page, int size) {
+        return areaBasedList1Repository.findAll(PageRequest.of(page,size, Sort.by("contentId").descending()));
     }
 }
