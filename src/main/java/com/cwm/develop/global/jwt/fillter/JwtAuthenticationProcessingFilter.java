@@ -6,12 +6,14 @@ import com.cwm.develop.user.User;
 import com.cwm.develop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -19,6 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Key;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -47,6 +51,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
@@ -96,6 +101,27 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             //checkAccessTokenAndAuthentication() : 액세스 토큰의 유효성을 검증하고 인증 성공, 실패 처리를 한다.
             checkAccessTokenAndAuthentication(request, response, filterChain);
         }
+
+        // 1. Request Header 에서 JWT 토큰 추출
+        String token = jwtService.extractAccessToken((HttpServletRequest) request).get();
+        System.out.println("토근: " + token);
+
+        // 2. validateToken 으로 토큰 유효성 검사
+        if (token != null && jwtService.isTokenValid(token)) {
+            // 이메일을 이용해서 로그아웃 여부 확인
+
+            String email = jwtService.extractEmail(token).get();
+            String isLogout = (String) redisTemplate.opsForValue().get(email);
+
+            if (ObjectUtils.isEmpty(isLogout)) {
+                // 로그아웃 상태가 아니라면 토큰에서 Authentication 객체를 가져와서 SecurityContext에 저장
+                Authentication authentication = jwtService.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }
+
+
+
     }
 
     /* [리프레시 토큰으로 유저 정보 찾기 & 엑세스 토큰/리프레시 토큰 재발급 메소드]

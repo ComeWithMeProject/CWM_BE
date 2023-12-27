@@ -8,6 +8,9 @@ server:
       force: true
 
 spring:
+  redis:
+    host: localhost
+    port: 6379
   application:
     name: user-service
   main:
@@ -23,7 +26,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none #create update validate none
+      ddl-auto: update #create update validate none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true

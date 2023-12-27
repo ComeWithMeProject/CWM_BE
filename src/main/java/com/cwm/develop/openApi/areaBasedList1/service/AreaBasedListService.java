@@ -1,15 +1,14 @@
 package com.cwm.develop.openApi.areaBasedList1.service;
 
 import com.cwm.develop.openApi.areaBasedList1.AreaBasedList1;
+import com.cwm.develop.openApi.areaBasedList1.dto.AreaInfoMapping;
 import com.cwm.develop.openApi.areaBasedList1.repository.AreaBasedList1Repository;
-import com.cwm.develop.openApi.areaCode1.AreaCode1;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +22,11 @@ import java.util.List;
 public class AreaBasedListService {
 
     private final AreaBasedList1Repository areaBasedList1Repository;
+
+    @Transactional
+    public List<AreaInfoMapping> search(String keyword) {
+        return areaBasedList1Repository.findByTitleContaining(keyword);
+    }
 
     @Transactional
     public void areaBasedList1Save() throws IOException {

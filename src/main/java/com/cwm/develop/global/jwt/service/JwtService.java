@@ -2,15 +2,21 @@ package com.cwm.develop.global.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.cwm.develop.global.login.service.LoginService;
 import com.cwm.develop.user.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 
@@ -43,9 +49,11 @@ public class JwtService {
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     private static final String EMAIL_CLAIM = "email";
-    private static final String BEARER = "Bearer";
+    private static final String BEARER = "Bearer ";
+    private Key key;
 
     private final UserRepository userRepository;
+    private final LoginService loginService;
 
     //AccessToken 생성 메소드
     public String createAccessToken(String email) { //email은 OAuth2로 로그인한 email을 받도록 할 것임
@@ -188,4 +196,30 @@ public class JwtService {
             return false;
         }
     }
+
+//    public Long getExpiration(String accessToken) {
+//        // accessToken 남은 유효시간
+//        Date expiration = Jwts.parserBuilder()
+//                .setSigningKey(key)
+//                .build()
+//                .parseClaimsJws(accessToken)
+//                .getBody()
+//                .getExpiration();
+//        // 현재 시간
+//        Long now = new Date().getTime();
+//        return (expiration.getTime() - now);
+//    }
+
+//    //토큰에서 Admin 정보 추출
+//    public String getAdminPk(String token) {
+//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+//    }
+
+    //인증 정보 조회
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = loginService.loadUserByUsername(extractEmail(token).get());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+
 }
