@@ -55,8 +55,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
     
-        // // 원하는 리다이렉트 경로로 이동
-        // String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
+        // 원하는 리다이렉트 경로로 이동
+        String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
         response.sendRedirect(request.getContextPath() + redirectUrl);
     }
 }
