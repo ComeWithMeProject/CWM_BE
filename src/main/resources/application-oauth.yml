@@ -15,7 +15,7 @@ spring:
             redirect-uri: "http://54.253.238.12:8083/login/oauth2/code/kakao"
             client-authentication-method: POST
             authorization-grant-type: authorization_code
-            scope: profile_nickname, profile_image, account_email
+            scope: profile_nickname, profile_image
 
           naver:
             client-id: VaZCSAXiqj9MzdqWeu66
