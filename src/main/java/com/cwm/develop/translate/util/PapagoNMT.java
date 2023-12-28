@@ -11,9 +11,10 @@ public class PapagoNMT {
 
     public static String KOREAN = "ko";
     public static String ENGLISH = "en";
-    public static String FRENCH = "fr";
-    public static String CHINESE = "zh-CN";
-    public static String SPANISH = "es";
+    public static String CHINESE_CN = "zh-CN"; // 중국어 간체
+    public static String CHINESE_TW = "zh-TW"; // 중국어 번체
+    public static String JAPANESE = "jp";
+    public static String THAI = "th";
 
     // 파파고 API 서버 주소
     private static String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
