@@ -78,7 +78,7 @@ public class UserService {
 
     //유저 회원 탈퇴
     @Transactional
-    public UserSuccessResponseDto deleteUser(Long userId, UserRequestDto userRequestDto) throws Exception {
+    public UserSuccessResponseDto deleteUser(Long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
 
