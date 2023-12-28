@@ -70,13 +70,13 @@ public class AreaBasedList1Controller {
 
     //검색 + 페이징 (메인페이지)
     @GetMapping("/areaBasedList1/main")
-    public ResponseEntity searchAreaBasedList1Main(@RequestParam(value ="areaCode", required = false) String areaCode, // areaCode(X) sigunguCode(O)
+    public ResponseEntity searchAreaBasedList1Main(@RequestParam(value ="sigunguCode", required = false) String sigunguCode, // areaCode(X) sigunguCode(O)
                                                    @RequestParam(value = "contentTypeId",defaultValue = "12", required = false) String contentTypeId,
                                                    @RequestParam(required = false, defaultValue = "0", value = "original") int original,
                                                    @RequestParam(required = false, defaultValue = "1", value = "translate") int translate,
                                                    @RequestParam @Positive int page,
                                                    @RequestParam @Positive int size) throws  Exception {
-        Page<AreaBasedList1> result = areaBasedListService.searchAreaCodeAndContentTypeId(areaCode, contentTypeId, page, size);
+        Page<AreaBasedList1> result = areaBasedListService.searchAreaCodeAndContentTypeId(sigunguCode, contentTypeId, page, size);
         List<AreaBasedList1> lists = result.getContent();
 
         TranslateFn translateFn = new TranslateFn();
