@@ -28,35 +28,35 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         log.info("OAuth2 Login 성공!");
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-    
+
             // User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트
             // User의 Role이 곧장 USER로 들어가야함. 메인 페이지로 리다이렉트 해야하지 않나 생각됨
             if(oAuth2User.getRole() == Role.GUEST) {
                 String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-                // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
-                response.sendRedirect(request.getContextPath() + "/oauth2/sign-up");
-    
+                response.sendRedirect("oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
+//                User findUser = userRepository.findByEmail(oAuth2User.getEmail())
+//                                .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저가 없습니다."));
+//                findUser.authorizeUser();
             } else {
-                loginSuccess(request, response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
+                loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
             }
         } catch (Exception e) {
             throw e;
         }
+
     }
-    
-    private void loginSuccess(HttpServletRequest request, HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
+
+    // TODO : 소셜 로그인 시에도 무조건 토큰 생성하지 말고 JWT 인증 필터처럼 RefreshToken 유/무에 따라 다르게 처리해보기
+    private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
         String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
-    
+
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
-    
-        // 원하는 리다이렉트 경로로 이동
-        String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
-        response.sendRedirect(request.getContextPath() + redirectUrl);
     }
 }
