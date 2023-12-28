@@ -124,11 +124,11 @@ public class AreaBasedListService {
 
     //검색 + 페이징 (메인페이지)
     @Transactional
-    public Page<AreaBasedList1> searchAreaCodeAndContentTypeId(String areaCode, String contentTypeId, int page, int size) {
-        if(areaCode == null) areaCode = "";
+    public Page<AreaBasedList1> searchAreaCodeAndContentTypeId(String sigunguCode, String contentTypeId, int page, int size) {
+        if(sigunguCode == null) sigunguCode = "";
         if(contentTypeId == null) contentTypeId = "";
 
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("areaBasedListId").descending());
-        return areaBasedList1Repository.findByAreaCodeAndContentTypeIdContains(areaCode, contentTypeId, pageRequest);
+        return areaBasedList1Repository.findByAreaCodeAndContentTypeIdContains(sigunguCode, contentTypeId, pageRequest);
     }
 }
