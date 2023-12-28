@@ -30,37 +30,35 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String email = extractUsername(authentication);
         String accessToken = jwtService.createAccessToken(email);
         String refreshToken = jwtService.createRefreshToken();
-
+    
         if (email != null && accessToken != null) {
-            // Redis에 AccessToken 저장
             redisTemplate.opsForValue().set(email, accessToken);
         } else {
             log.error("Email 또는 AccessToken 값이 null입니다. Redis에 저장하지 않습니다.");
             return;
         }
-
+    
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-
-        // 유저 정보 업데이트
+    
         userRepository.findByEmail(email)
                 .ifPresent(user -> {
                     user.updateRefreshToken(refreshToken);
                     userRepository.saveAndFlush(user);
                 });
-
-        log.info("로그인에 성공했습니다. 이메일: {}", email);
-        log.info("로그인에 성공했습니다. AccessToken: {}", accessToken);
-
-        try {
-            String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
-            response.sendRedirect(request.getContextPath() + redirectUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
+    
+        log.info("로그인에 성공했습니다. 이메일 : {}", email);
+        log.info("로그인에 성공했습니다. AccessToken : {}", accessToken);
+        log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
+    
+        // 리다이렉트 하기 전에 토큰을 응답 헤더에 추가합니다.
+        response.addHeader("Authorization", "Bearer " + accessToken);
+    
+        String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
+        response.sendRedirect(request.getContextPath() + redirectUrl);
+    }
+    
+        private String extractUsername(Authentication authentication) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return userDetails.getUsername();
         }
     }
-
-    private String extractUsername(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userDetails.getUsername();
-    }
-}
