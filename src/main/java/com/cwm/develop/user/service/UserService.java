@@ -71,8 +71,6 @@ public class UserService {
     public UserResponseDto updateUser(Long userId, UserRequestDto userRequestDto) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
-        if(!userRequestDto.getPassword().equals(user.getPassword()))
-            throw new Exception("비밀번호가 일치하지 않습니다.");
 
         user.update(userRequestDto);
         return new UserResponseDto(user);
@@ -83,9 +81,6 @@ public class UserService {
     public UserSuccessResponseDto deleteUser(Long userId, UserRequestDto userRequestDto) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
-
-        if(!userRequestDto.getPassword().equals(user.getPassword()))
-            throw new Exception("비밀번호가 일치하지 않습니다.");
 
         userRepository.deleteById(userId);
         return new UserSuccessResponseDto(true);
