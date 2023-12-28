@@ -59,7 +59,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
 
         try {
-            String redirectUrl = "/api/areaBasedList1/main?page=1"; // 페이지 파라미터를 1로 설정한 예시
+            String redirectUrl = "/api/areaBasedList1/main?page=1&size=12"; // 페이지 파라미터를 1로 설정한 예시
             response.sendRedirect(request.getContextPath() + redirectUrl);
         } catch (IOException e) {
             // 예외 처리 로직
