@@ -13,11 +13,13 @@ public class TranslateFn {
         if(selected == 1) {
             target = PapagoNMT.ENGLISH;
         } else if(selected == 2) {
-            target = PapagoNMT.FRENCH;
+            target = PapagoNMT.CHINESE_CN;
         } else if(selected == 3) {
-            target = PapagoNMT.CHINESE;
+            target = PapagoNMT.CHINESE_TW;
         } else if(selected == 4) {
-            target = PapagoNMT.SPANISH;
+            target = PapagoNMT.JAPANESE;
+        }  else if(selected == 5) {
+            target = PapagoNMT.THAI;
         } else {
             return "입력한 번호가 유효하지 않습니다.";
         }
