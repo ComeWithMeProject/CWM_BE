@@ -1,5 +1,6 @@
 package com.cwm.develop.global.login.handler;
 
+import java.io.IOException;
 import com.cwm.develop.global.jwt.service.JwtService;
 import com.cwm.develop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
