@@ -57,7 +57,12 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("로그인에 성공했습니다. AccessToken : {}", accessToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
 
-        response.sendRedirect("api/areaBasedList1/main");
+        try {
+            response.sendRedirect("api/areaBasedList1/main");
+        } catch (IOException e) {
+            // IOException 처리 로직 추가
+            e.printStackTrace(); // 또는 로깅하거나 다른 방식으로 처리
+        }
     }
 
     private String extractUsername(Authentication authentication) {
