@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "BOARD")
