@@ -71,8 +71,8 @@ public class BoardController {
 
     //게시글 삭제
     @DeleteMapping("/post/{id}")
-    public SuccessResponseDto deletePost(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) throws Exception{
-        return boardService.deletePost(id, requestDto);
+    public SuccessResponseDto deletePost(@PathVariable Long id) throws Exception{
+        return boardService.deletePost(id);
     }
 
     //게시글 검색 + 페이징
