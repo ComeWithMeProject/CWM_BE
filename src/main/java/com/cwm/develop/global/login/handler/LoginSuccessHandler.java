@@ -1,14 +1,15 @@
 package com.cwm.develop.global.login.handler;
 
 import com.cwm.develop.global.jwt.service.JwtService;
-import com.cwm.develop.user.entity.User;
 import com.cwm.develop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired; // 이 부분 추가
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.data.redis.core.RedisTemplate; // 이 부분 추가
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate; // 이 부분 추가
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
