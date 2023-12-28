@@ -91,8 +91,8 @@ public class UserController {
 
     //유저 회원 탈퇴
     @DeleteMapping("/users/{id}")
-    public UserSuccessResponseDto deleteUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) throws Exception {
-        return userService.deleteUser(id, userRequestDto);
+    public UserSuccessResponseDto deleteUser(@PathVariable Long id) throws Exception {
+        return userService.deleteUser(id);
     }
 
 
