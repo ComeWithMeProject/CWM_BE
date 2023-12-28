@@ -62,6 +62,7 @@ public class SecurityConfig {
 
                 // 아이콘, css, js 관련
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능
+                .antMatchers("/api/areaBasedList1/main").permitAll()
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico").permitAll()
                 .antMatchers("/user/**").permitAll() // 회원가입 접근 가능
                 .antMatchers("/api/**").permitAll() // Open Api DB 저장 가능

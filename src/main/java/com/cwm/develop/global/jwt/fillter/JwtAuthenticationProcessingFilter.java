@@ -104,7 +104,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         // 1. Request Header 에서 JWT 토큰 추출
         String token = jwtService.extractAccessToken((HttpServletRequest) request).orElse(null);  //.get();
-        System.out.println("토근: " + token);
+//        System.out.println("토근: " + token);
 
         // 2. validateToken 으로 토큰 유효성 검사
         if (token != null && jwtService.isTokenValid(token)) {

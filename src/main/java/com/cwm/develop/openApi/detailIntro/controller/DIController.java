@@ -4,6 +4,7 @@ import com.cwm.develop.global.common.MultiResponseDto;
 import com.cwm.develop.openApi.detailIntro.entity.*;
 import com.cwm.develop.openApi.detailIntro.service.DISerivce;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,14 @@ import java.util.List;
 public class DIController {
 
     private final DISerivce diSerivce;
+
+    @GetMapping("/detailView")
+    public String detailView(@RequestParam(required = false, value = "contentId") String contentId,
+                             @RequestParam(required = false, value = "contentTypeId") String contentTypeId) throws Exception {
+        String jsonData = diSerivce.DetailView(contentId,contentTypeId);
+
+        return jsonData;
+    }
 
     @GetMapping("/detailIntro12")
     public String loadDetailIntro12() throws Exception {

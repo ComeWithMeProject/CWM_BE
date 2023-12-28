@@ -15,6 +15,8 @@ public interface AreaBasedList1Repository extends JpaRepository<AreaBasedList1, 
 
     Optional<AreaBasedList1> findById(Long id);
 
+    Optional<AreaBasedList1> findByContentId(String contentId);
+
     //페이징 처리 통해 전체 목록 조회
     Page<AreaBasedList1> findAll(Pageable pageable);
 

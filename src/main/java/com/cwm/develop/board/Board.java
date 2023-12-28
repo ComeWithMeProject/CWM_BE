@@ -1,14 +1,11 @@
 package com.cwm.develop.board;
 
 import com.cwm.develop.board.dto.BoardRequestDto;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
+@Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "BOARD")
