@@ -7,10 +7,28 @@ import org.json.simple.parser.ParseException;
 
 public class TranslateFn {
 
-    public String translateFunction(String string, int selected) throws ParseException {
+    public String translateFunction(String string, int original, int selected) throws ParseException {
         String source = PapagoNMT.KOREAN, target = PapagoNMT.ENGLISH;
 
-        if(selected == 1) {
+        if(original == 0) {
+            source = PapagoNMT.KOREAN;
+        } else if(original == 1) {
+            source = PapagoNMT.ENGLISH;
+        } else if(original == 2) {
+            source = PapagoNMT.CHINESE_CN;
+        } else if(original == 3) {
+            source = PapagoNMT.CHINESE_TW;
+        } else if(original == 4) {
+            source = PapagoNMT.JAPANESE;
+        }  else if(original == 5) {
+            source = PapagoNMT.THAI;
+        } else {
+            return "입력한 번호가 유효하지 않습니다.";
+        }
+
+        if(selected == 0) {
+            target = PapagoNMT.KOREAN;
+        } else if(selected == 1) {
             target = PapagoNMT.ENGLISH;
         } else if(selected == 2) {
             target = PapagoNMT.CHINESE_CN;

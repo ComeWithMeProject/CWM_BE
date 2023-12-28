@@ -4,6 +4,9 @@ import com.cwm.develop.openApi.areaBasedList1.AreaBasedList1;
 import com.cwm.develop.openApi.areaBasedList1.repository.AreaBasedList1Repository;
 import com.cwm.develop.openApi.detailIntro.entity.*;
 import com.cwm.develop.openApi.detailIntro.repository.*;
+import com.cwm.develop.openApi.detailWithTour.DetailWithTour;
+import com.cwm.develop.openApi.detailWithTour.repository.DWTRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,6 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +38,84 @@ public class DISerivce {
     private final DIRepository32 diRepository32;
     private final DIRepository38 diRepository38;
     private final DIRepository39 diRepository39;
+    private final DWTRepository dwtRepository;
+
+    @Transactional
+    public String DetailView(String contentId, String contentTypeId) throws IOException {
+        AreaBasedList1 areaBasedList1 = areaBasedList1Repository.findByContentId(contentId).get();
+        String title = areaBasedList1.getTitle();
+        String addr1 = areaBasedList1.getAddr1();
+        String addr2 = areaBasedList1.getAddr2();
+
+//        사용 시간 -> Detail Intro
+//        전화번호 -> Detail Intro
+
+        String usetime = "09:00 ~ 17:00";
+        String tel = "02-3407-6531";
+
+        switch (contentTypeId) {  // 입력 변수의 자료형은 byte, short, char, int, enum, String만 가능하다.
+            case "12":  DetailIntro12 detailIntro12 = diRepository12.findByContentId(contentId).get();
+                        usetime = detailIntro12.getUsetime();
+                        tel = detailIntro12.getInfocenter();
+                break;
+            case "14":  DetailIntro14 detailIntro14 = diRepository14.findByContentId(contentId).get();
+                        usetime = detailIntro14.getUsetimeculture();
+                        tel = detailIntro14.getInfocenterculture();
+                break;
+            case "15":  DetailIntro15 detailIntro15 = diRepository15.findByContentId(contentId).get();
+                        usetime = detailIntro15.getPlaytime();
+                        tel = detailIntro15.getSponsor1tel();
+                break;
+            case "28":  DetailIntro28 detailIntro28 = diRepository28.findByContentId(contentId).get();
+                        usetime = detailIntro28.getUsetimeleports();
+                        tel = detailIntro28.getInfocenterleports();
+                break;
+            case "32":  DetailIntro32 detailIntro32 = diRepository32.findByContentId(contentId).get();
+                        usetime = detailIntro32.getCheckintime() + " ~ " + detailIntro32.getCheckouttime();
+                        tel = detailIntro32.getInfocenterlodging();
+                break;
+            case "38":  DetailIntro38 detailIntro38 = diRepository38.findByContentId(contentId).get();
+                        usetime = detailIntro38.getOpentime();
+                        tel = detailIntro38.getInfocentershopping();
+                break;
+            case "39":  DetailIntro39 detailIntro39 = diRepository39.findByContentId(contentId).get();
+                        usetime = detailIntro39.getOpendatefood();
+                        tel = detailIntro39.getInfocenterfood();
+            default:
+                break;
+        }
+
+//        장애인 주차 -> DetailWithTour
+//        장애인 화장실 -> DetailWithTour
+//        안내견 동반 -> DetailWithTour
+//        유모차 대여 -> DetailWithTour
+
+        DetailWithTour detailWithTour = dwtRepository.findByContentId(contentId).get();
+        String parking = detailWithTour.getParking();
+        String restroom = detailWithTour.getRestroom();
+        String helpdog = detailWithTour.getHelpdog();
+        String stroller = detailWithTour.getStroller();
+
+        Map<String, Object> dataMap = new LinkedHashMap<>();
+        dataMap.put("title", title);
+        dataMap.put("addr1", addr1);
+        dataMap.put("addr2", addr2);
+        dataMap.put("usetime", usetime);
+        dataMap.put("tel", tel);
+        dataMap.put("parking", parking);
+        dataMap.put("restroom", restroom);
+        dataMap.put("helpdog", helpdog);
+        dataMap.put("stroller", stroller);
+
+        // ObjectMapper를 사용하여 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(dataMap);
+
+        return jsonData;
+
+//        String jsonData = String.format("{\"title\":%s, \"addr1\":%s, \"addr2\":%s, \"usetime\":%s, \"tel\":%s, \"parking\":%s, \"restroom\":%s, \"helpdog\":%s, \"stroller\":%s}",title,addr1,addr2,usetime,tel,parking,restroom,helpdog,stroller);
+//        return jsonData;
+    }
 
     @Transactional
     public void DetailIntroSave12() throws IOException {

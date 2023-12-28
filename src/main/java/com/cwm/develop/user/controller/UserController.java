@@ -12,6 +12,7 @@ import com.cwm.develop.user.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -32,9 +33,21 @@ public class UserController {
     private final UserRepository userRepository;
 
     //유저 회원가입
+//    @PostMapping("/users")
+//    public UserResponseDto signUp(@RequestBody UserRequestDto userRequestDto) throws Exception {
+//        return userService.signUpUser(userRequestDto);
+//    }
+
     @PostMapping("/users")
-    public UserResponseDto signUp(@RequestBody UserRequestDto userRequestDto) throws Exception {
-        return userService.signUpUser(userRequestDto);
+    public ResponseEntity<?> signUp(@RequestBody UserRequestDto userRequestDto) throws Exception {
+        UserResponseDto responseDto;
+        // 여기서 userService.signUpUser() 메서드가 적절한 반환값 또는 예외를 처리하여 결과를 가져온다고 가정합니다.
+        try {
+            responseDto = userService.signUpUser(userRequestDto);
+            return ResponseEntity.ok(responseDto); // 회원가입 성공 시 200 OK와 함께 데이터 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입에 실패했습니다."); // 실패 시 500 에러와 함께 메시지 반환
+        }
     }
 
     @GetMapping("/my")

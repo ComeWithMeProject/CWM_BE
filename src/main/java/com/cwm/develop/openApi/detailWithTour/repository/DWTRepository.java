@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface DWTRepository extends JpaRepository<DetailWithTour, Long> {
     Optional<DetailWithTour> findById(Long id);
 
+    Optional<DetailWithTour> findByContentId(String contentId);
+
     //페이징 처리 통해 전체 목록 조회
     Page<DetailWithTour> findAll(Pageable pageable);
 }

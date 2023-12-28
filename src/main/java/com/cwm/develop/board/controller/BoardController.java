@@ -6,7 +6,9 @@ import com.cwm.develop.board.dto.BoardResponseDto;
 import com.cwm.develop.board.dto.SuccessResponseDto;
 import com.cwm.develop.board.service.BoardService;
 import com.cwm.develop.global.common.MultiResponseDto;
+import com.cwm.develop.translate.core.TranslateFn;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +33,20 @@ public class BoardController {
     //페이징 처리한 전체 목록 조회
     @GetMapping("/paging/posts")
     public ResponseEntity getPostsPage(@RequestParam(required = false, defaultValue = "0", value = "page") int page,
-                                       @RequestParam(required = false, defaultValue = "0", value = "size") int size) {
+                                       @RequestParam(required = false, defaultValue = "0", value = "size") int size,
+                                       @RequestParam(required = false, defaultValue = "0", value = "original") int original,
+                                       @RequestParam(required = false, defaultValue = "1", value = "translate") int translate) throws ParseException {
         Page<Board> result = boardService.getPostsPage(page -1, size);
         List<Board> lists = result.getContent();
+
+        TranslateFn translateFn = new TranslateFn();
+        for(int i=0; i<lists.size(); i++) {
+            String translatesTitle = translateFn.translateFunction(lists.get(i).getTitle(), original, translate);
+            String translatesContent = translateFn.translateFunction(lists.get(i).getContent(), original, translate);
+
+            lists.get(i).setTitle(translatesTitle);
+            lists.get(i).setContent(translatesContent);
+        }
 
         return new ResponseEntity(new MultiResponseDto<>(lists,result), HttpStatus.OK);
     }
@@ -66,9 +79,22 @@ public class BoardController {
     @GetMapping("/post/search")
     public ResponseEntity searchPosts(@RequestParam(value ="title",required = false) String title,
                                       @RequestParam @Positive int page,
-                                      @RequestParam @Positive int size) {
-        Page<Board> pageBoards = boardService.searchPosts(title, page, size);
+                                      @RequestParam @Positive int size,
+                                      @RequestParam(required = false, defaultValue = "0", value = "original") int original,
+                                      @RequestParam(required = false, defaultValue = "1", value = "translate") int translate) throws ParseException {
+        TranslateFn translateFn = new TranslateFn();
+        String translateTitle = translateFn.translateFunction(title,original,translate);
+
+        Page<Board> pageBoards = boardService.searchPosts(translateTitle, page, size);
         List<Board> lists = pageBoards.getContent();
+
+        for(int i=0; i<lists.size(); i++) {
+            String translatesTitle = translateFn.translateFunction(lists.get(i).getTitle(), translate, original);
+            String translatesContent = translateFn.translateFunction(lists.get(i).getContent(), translate, original);
+
+            lists.get(i).setTitle(translatesTitle);
+            lists.get(i).setContent(translatesContent);
+        }
 
         return new ResponseEntity(new MultiResponseDto<>(lists, pageBoards), HttpStatus.OK);
     }
