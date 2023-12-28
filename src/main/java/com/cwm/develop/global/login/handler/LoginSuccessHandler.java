@@ -52,6 +52,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     
         // 리다이렉트 하기 전에 토큰을 응답 헤더에 추가합니다.
         response.addHeader("Authorization", "Bearer " + accessToken);
+        response.addHeader("Authorization", "Bearer " + refreshToken);
     
         String redirectUrl = "/api/areaBasedList1/main?page=1&size=12";
         response.sendRedirect(request.getContextPath() + redirectUrl);
