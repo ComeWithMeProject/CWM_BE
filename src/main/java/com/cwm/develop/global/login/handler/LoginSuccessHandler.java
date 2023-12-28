@@ -22,6 +22,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+
+    @Autowired
     private final RedisTemplate<String, String> redisTemplate; // 이 부분 추가
 
     @Override
