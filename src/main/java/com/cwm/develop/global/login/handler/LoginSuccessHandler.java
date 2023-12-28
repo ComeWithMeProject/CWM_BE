@@ -66,6 +66,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             e.printStackTrace();
         }
     }
+    
 
     private String extractUsername(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
