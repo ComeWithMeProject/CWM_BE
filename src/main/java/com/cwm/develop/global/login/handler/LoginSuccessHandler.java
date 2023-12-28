@@ -5,6 +5,7 @@ import com.cwm.develop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -23,6 +24,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${jwt.access.expiration}")
     private String accessTokenExpiration;
@@ -33,6 +35,16 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String email = extractUsername(authentication); //인증 정보에서 Username(email) 추출
         String accessToken = jwtService.createAccessToken(email); //JwtService의 createAccessToken을 사용하여 AccessToken 발급
         String refreshToken = jwtService.createRefreshToken(); //JwtService의 createRefreshToken을 사하여 RefreshToken 발급
+
+        // Null 체크 추가
+        if (email != null && accessToken != null) {
+            redisTemplate.opsForValue().set(email,accessToken);
+        } else {
+            // 예외 처리 또는 로그 추가
+            log.error("Email 또는 AccessToken 값이 null입니다. Redis에 저장하지 않습니다.");
+            // 여기서 예외를 던지거나 다른 처리를 추가할 수 있습니다.
+            return; // 혹은 이상적인 흐름에 따라 다른 처리를 할 수 있습니다.
+        }
 
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken); //응답 헤더에 accessToken, refreshToken 실어서 응답
 
