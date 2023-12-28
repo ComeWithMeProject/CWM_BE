@@ -24,5 +24,5 @@ public interface AreaBasedList1Repository extends JpaRepository<AreaBasedList1, 
     Page<AreaBasedList1> findByTitleContains(String title, Pageable pageable);
 
     //검색 + 페이징 (메인페이지)
-    Page<AreaBasedList1> findByAreaCodeAndContentTypeIdContains(String areaCode, String contentTypeId, Pageable pageable);
+    Page<AreaBasedList1> findByAreaCodeAndContentTypeIdContains(String sigunguCode, String contentTypeId, Pageable pageable);
 }
