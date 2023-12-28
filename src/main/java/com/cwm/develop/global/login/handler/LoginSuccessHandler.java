@@ -55,8 +55,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("로그인에 성공했습니다. RefreshToken : {}", refreshToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
 
-        // // 리다이렉션을 위한 기본 대상 URL 설정
-        // setDefaultTargetUrl("/api/areaBasedList1/main?page=1&size=12");
+        // 리다이렉션을 위한 기본 대상 URL 설정
+        setDefaultTargetUrl("/api/areaBasedList1/main?page=1&size=12");
 
         // RedirectStrategy를 사용하여 리다이렉션 수행
         try {
