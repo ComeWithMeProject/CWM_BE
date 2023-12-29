@@ -44,6 +44,7 @@ public class AreaBasedList1Controller {
     //검색 + 페이징 (검색페이지)
     @GetMapping("/areaBasedList1/search")
     public ResponseEntity searchAreaBasedList1Title(@RequestParam(value ="title",required = false) String title,
+                                                    @RequestParam(value = "contentTypeId",defaultValue = "12", required = false) String contentTypeId,
                                                    @RequestParam @Positive int page,
                                                    @RequestParam @Positive int size,
                                                     @RequestParam(required = false, defaultValue = "1", value = "original") int original,
@@ -52,7 +53,7 @@ public class AreaBasedList1Controller {
         String translateTitle = translateFn.translateFunction(title,original,translate);
         System.out.println(translateTitle);
 
-        Page<AreaBasedList1> result = areaBasedListService.searchTitle(translateTitle, page, size);
+        Page<AreaBasedList1> result = areaBasedListService.searchTitle(translateTitle, contentTypeId, page, size);
         List<AreaBasedList1> lists = result.getContent();
 
         for(int i=0; i<lists.size(); i++) {
