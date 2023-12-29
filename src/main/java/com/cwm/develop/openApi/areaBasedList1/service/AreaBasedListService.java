@@ -119,7 +119,7 @@ public class AreaBasedListService {
         if(title == null) title = "";
 
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("areaBasedListId").descending());
-        return areaBasedList1Repository.findByTitleContains(title, contentTypeId, pageRequest);
+        return areaBasedList1Repository.findByTitleAndContentTypeIdContains(title, contentTypeId, pageRequest);
     }
 
     //검색 + 페이징 (메인페이지)
