@@ -115,11 +115,11 @@ public class AreaBasedListService {
 
     //검색 + 페이징 (검색페이지)
     @Transactional
-    public Page<AreaBasedList1> searchTitle(String title, int page, int size) {
+    public Page<AreaBasedList1> searchTitle(String title, String contentTypeId, int page, int size) {
         if(title == null) title = "";
 
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("areaBasedListId").descending());
-        return areaBasedList1Repository.findByTitleContains(title, pageRequest);
+        return areaBasedList1Repository.findByTitleContains(title, contentTypeId, pageRequest);
     }
 
     //검색 + 페이징 (메인페이지)
